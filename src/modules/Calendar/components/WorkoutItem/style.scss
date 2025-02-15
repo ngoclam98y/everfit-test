@@ -1,0 +1,47 @@
+.workout-item {
+    .workout-planner-content {
+        border: 1px solid #22242626;
+        border-radius: 5px;
+        padding: 4px 7px;
+        margin-bottom: 4px;
+    }
+
+    .workout-item-name {
+        display: flex;
+        justify-content: flex-end;
+
+        span {
+            display: inline-block;
+            max-width: 120px;
+            font-size: 13px;
+            font-weight: 600;
+            color: black;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: right;
+        }
+    }
+
+    .workout-item-details {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .workout-item-sets,
+    .workout-item-reps {
+        font-size: 10x;
+        font-weight: 700;
+        color: #919CAD;
+    }
+
+    .workout-item-reps {
+        font-weight: 400;
+        max-width: 115px;
+        width: 115px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: right;
+    }
+}
