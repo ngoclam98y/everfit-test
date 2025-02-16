@@ -89,8 +89,8 @@ const WeeklyCalendar: React.FC = () => {
                         <ModalContainer>
                             <ModalHeader title="Add Workout" isClose onClose={closeWorkoutModal} />
                             <ModalBody>
-                                <Input label="Name" onChange={(e) => setworkoutSets(+e.target.value)} />
-                                <Input type="number" label="Sets" onChange={(e) => setWorkoutName(e.target.value)} />
+                                <Input label="Name" onChange={(e) => setWorkoutName(e.target.value)} />
+                                <Input type="number" label="Sets" onChange={(e) => setworkoutSets(+e.target.value)} />
                                 <Input label="Reps" onChange={(e) => setWorkoutReps(e.target.value)} />
                             </ModalBody>
                             <ModalFooter onClickOk={() => {
