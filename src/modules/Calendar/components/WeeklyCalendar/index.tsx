@@ -26,6 +26,7 @@ const WeeklyCalendar: React.FC = () => {
 
     const [workoutSets, setworkoutSets] = React.useState<number>(0);
     const [workoutReps, setWorkoutReps] = React.useState<string>('');
+    const [workoutName, setWorkoutName] = React.useState<string>('');
 
     const [titleWorkoutPlanner, setTitleWorkoutPlanner] = React.useState<string>('');
 
@@ -88,13 +89,14 @@ const WeeklyCalendar: React.FC = () => {
                         <ModalContainer>
                             <ModalHeader title="Add Workout" isClose onClose={closeWorkoutModal} />
                             <ModalBody>
-                                <Input type="number" label="Sets" onChange={(e) => setworkoutSets(+e.target.value)} />
+                                <Input label="Name" onChange={(e) => setworkoutSets(+e.target.value)} />
+                                <Input type="number" label="Sets" onChange={(e) => setWorkoutName(e.target.value)} />
                                 <Input label="Reps" onChange={(e) => setWorkoutReps(e.target.value)} />
                             </ModalBody>
                             <ModalFooter onClickOk={() => {
                                 handleAddWorkoutItem(workoutPlannerItemSelected, {
                                     id: uuid.v4(),
-                                    name: titleWorkoutPlanner,
+                                    name: workoutName,
                                     sets: workoutSets,
                                     reps: workoutReps
                                 })
