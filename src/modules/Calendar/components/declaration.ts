@@ -4,6 +4,12 @@ export type WorkoutPlan = {
     workout: WorkoutItem[];
 };
 
+export type ErrorWorkout = {
+    name?: string;
+    sets?: string;
+    reps?: string;
+};
+
 export interface WorkoutPlannerProps {
     day: string;
     open: (date: string) => void;

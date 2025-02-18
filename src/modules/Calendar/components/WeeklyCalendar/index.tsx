@@ -6,7 +6,7 @@ import { useDisclosure } from "@/hooks/useDisclosure";
 import Input from "@/components/Input";
 import * as uuid from "uuid";
 import WorkoutPlannerDay from "../WorkoutPlanner";
-import { WorkoutPlannerItemSelected } from "../declaration";
+import { ErrorWorkout, WorkoutPlannerItemSelected } from "../declaration";
 
 const WeeklyCalendar: React.FC = () => {
     const {
@@ -29,6 +29,14 @@ const WeeklyCalendar: React.FC = () => {
     const [workoutName, setWorkoutName] = React.useState<string>('');
 
     const [titleWorkoutPlanner, setTitleWorkoutPlanner] = React.useState<string>('');
+
+    const [errorTitleWorkoutPlanner, setErrorTitleWorkoutPlanner] = React.useState<string>('');
+
+    const [errorWorkout, setErrorWorkout] = React.useState<ErrorWorkout>({
+        name: '',
+        sets: '',
+        reps: ''
+    });
 
     const handleAddWorkoutPlannerModal = (date: string) => {
         open();
@@ -67,9 +75,14 @@ const WeeklyCalendar: React.FC = () => {
                         <ModalContainer>
                             <ModalHeader title="Add Workout Planner" isClose onClose={close} />
                             <ModalBody>
-                                <Input label="Name" onChange={(e) => setTitleWorkoutPlanner(e.target.value)} />
+                                <Input error={errorTitleWorkoutPlanner} label="Name" onChange={(e) => setTitleWorkoutPlanner(e.target.value)} />
                             </ModalBody>
                             <ModalFooter onClickOk={() => {
+                                if (!titleWorkoutPlanner) {
+                                    setErrorTitleWorkoutPlanner("Title workout planner is required");
+                                    return;
+                                }
+                                setErrorTitleWorkoutPlanner('');
                                 handleAddWorkoutPlanner({
                                     id: uuid.v4(),
                                     name: titleWorkoutPlanner,
@@ -89,11 +102,20 @@ const WeeklyCalendar: React.FC = () => {
                         <ModalContainer>
                             <ModalHeader title="Add Workout" isClose onClose={closeWorkoutModal} />
                             <ModalBody>
-                                <Input label="Name" onChange={(e) => setWorkoutName(e.target.value)} />
-                                <Input type="number" label="Sets" onChange={(e) => setworkoutSets(+e.target.value)} />
-                                <Input label="Reps" onChange={(e) => setWorkoutReps(e.target.value)} />
+                                <Input label="Name" error={errorWorkout.name} onChange={(e) => setWorkoutName(e.target.value)} />
+                                <Input type="number" min={1} error={errorWorkout.sets} label="Sets" onChange={(e) => setworkoutSets(+e.target.value)} />
+                                <Input label="Reps" error={errorWorkout.reps} onChange={(e) => setWorkoutReps(e.target.value)} />
                             </ModalBody>
                             <ModalFooter onClickOk={() => {
+                                if (!workoutName || workoutSets == 0 || !workoutReps) {
+                                    const setsErrStr = workoutSets == 0 ? "Sets workout is required" : "";
+                                    const repsErrStr = !workoutReps ? "Reps workout is required" : "";
+                                    const nameErrStr = !workoutName ? "Name workout is required" : "";
+                                    setErrorWorkout({ ...errorWorkout, sets: setsErrStr, name: nameErrStr, reps: repsErrStr });
+                                    return;
+                                }
+                                setErrorWorkout({ name: '', sets: '', reps: '' });
+
                                 handleAddWorkoutItem(workoutPlannerItemSelected, {
                                     id: uuid.v4(),
                                     name: workoutName,

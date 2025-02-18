@@ -27,7 +27,12 @@ export const getMondayOfCurrentWeek = (date: Date): Date => {
 
 export const getDayText = (day: string) => {
     if (!day) return "";
-    return new Date(day).toLocaleDateString("en-US", { weekday: "short" });
+
+    const today = new Date();
+    const customDate = new Date(today.getFullYear(), today.getMonth(), Number(day) + 1);
+    const formattedCustomDate = customDate.toISOString().split('T')[0];
+
+    return new Date(formattedCustomDate).toLocaleDateString("en-US", { weekday: "short" });
 }
 
 export const getDay = (day: string) => {
